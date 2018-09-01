@@ -36,4 +36,4 @@ tbd
 
 ## License 
 
-ByteBackpacker is released under the MIT license. See [LICENSE](LICENSE) for more details.
+Gerry is released under the MIT license. See [LICENSE](LICENSE) for more details.
