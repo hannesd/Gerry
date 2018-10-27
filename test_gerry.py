@@ -33,6 +33,22 @@ class CreateTimeFrames(unittest.TestCase):
         self.assertEqual(len(timeframes), 24)
 
 
+# This method will be used by the mock to replace requests.get
+def mocked_requests_get(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.json_data = json_data
+            self.status_code = status_code
+
+        def json(self):
+            return self.json_data
+
+    if args[0] == 'http://too-many-requests.com':
+        raise gerry.requests.exceptions.RequestException(response=MockResponse({"key1": "value1"}, 429))
+    elif args[0] == 'http://no-response.com':
+        raise gerry.requests.exceptions.RequestException(response=None)
+
+
 class Gerry(unittest.TestCase):
 
     @patch('os.makedirs')
@@ -40,6 +56,50 @@ class Gerry(unittest.TestCase):
         mock_makedirs.return_value = True
         self.gerry = gerry.Gerry('gerrit', 'https://gerrit-review.googlesource.com',
                                  datetime.datetime(2018, 6, 1), datetime.datetime(2018, 6, 2), './gerry_data/')
+
+    @patch('time.sleep')
+    def test_wait_for_server(self, mock_sleep):
+        gerry.Gerry.wait_for_server(000)
+        self.assertFalse(mock_sleep.called)
+
+        gerry.Gerry.wait_for_server(429)
+        self.assertTrue(mock_sleep.called)
+
+        gerry.Gerry.wait_for_server(500)
+        self.assertTrue(mock_sleep.called)
+
+        gerry.Gerry.wait_for_server(501)
+        self.assertTrue(mock_sleep.called)
+
+    @patch('gerry.log')
+    @patch('gerry.requests.get', side_effect=mocked_requests_get)
+    @patch('gerry.Gerry.wait_for_server')
+    def test_handle_exception(self, mock_wait_for_server, mock_get, mock_log):
+        try:
+            mock_get("http://too-many-requests.com")
+        except Exception as exception:
+            gerry.Gerry.handle_exception(exception, 'change 42')
+        mock_wait_for_server.assert_called_once_with(429)
+        self.assertTrue(mock_log.error.called)
+
+        try:
+            mock_get("http://no-response.com")
+        except Exception as exception:
+            gerry.Gerry.handle_exception(exception, 'change 42')
+        self.assertTrue(mock_log.error.called)
+
+        try:
+            raise gerry.json.JSONDecodeError('', '', 0)
+        except Exception as exception:
+            gerry.Gerry.handle_exception(exception, 'change 42')
+        self.assertTrue(mock_log.error.called)
+
+        try:
+            raise Exception()
+        except Exception as exception:
+            gerry.Gerry.handle_exception(exception, 'change 42')
+        self.assertTrue(mock_log.error.called)
+        mock_wait_for_server.assert_called_once_with(429)
 
     def test_get_changes(self):
         changes = self.gerry.get_changes(
