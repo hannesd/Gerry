@@ -26,8 +26,7 @@ def create_time_frames(from_datetime, to_datetime, frame_size):
     # [from_datetime, to_datetime[
     result = []
     time_frame_start = from_datetime
-    time_frame_end = from_datetime + frame_size + \
-        datetime.timedelta(milliseconds=-1)
+    time_frame_end = from_datetime + frame_size + datetime.timedelta(milliseconds=-1)
     while time_frame_end <= to_datetime:
         result += [(time_frame_start, time_frame_end)]
         time_frame_start += frame_size
@@ -62,8 +61,7 @@ class Gerry(object):
             if exception.response is not None:
                 log.error('GET %s failed with http status %i' % (
                     change_type, exception.response.status_code))
-                Gerry.wait_for_server(
-                    exception.response.status_code)
+                Gerry.wait_for_server(exception.response.status_code)
             else:
                 log.error('GET %s failed with error: %s' % (change_type,
                                                             exception))
@@ -77,7 +75,7 @@ class Gerry(object):
     def get_changes(self, day):
         from_datetime = day
         to_datetime = from_datetime + \
-            datetime.timedelta(hours=24) + datetime.timedelta(milliseconds=-1)
+                      datetime.timedelta(hours=24) + datetime.timedelta(milliseconds=-1)
         more_changes = True
         changes = []
         offset = 0
@@ -149,16 +147,15 @@ class Gerry(object):
                     try:
                         self.get_change(change_number, day_path)
                     except Exception as exception:
-                        Gerry.handle_exception(
-                            exception, 'change ' + str(change_number))
+                        Gerry.handle_exception(exception, 'change ' + str(change_number))
                         complete = False
 
 
 if __name__ == '__main__':
-
     data = {
         'openstack': {'url': 'https://review.openstack.org', 'start_datetime': datetime.datetime(2011, 7, 1)},
-        'chromium': {'url': 'https://chromium-review.googlesource.com', 'start_datetime': datetime.datetime(2011, 4, 1)},
+        'chromium': {'url': 'https://chromium-review.googlesource.com',
+                     'start_datetime': datetime.datetime(2011, 4, 1)},
         'gerrit': {'url': 'https://gerrit-review.googlesource.com', 'start_datetime': datetime.datetime(2008, 7, 1)},
         'android': {'url': 'https://android-review.googlesource.com', 'start_datetime': datetime.datetime(2008, 7, 1)},
         'golang': {'url': 'https://go-review.googlesource.com', 'start_datetime': datetime.datetime(2014, 11, 1)},
