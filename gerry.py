@@ -63,14 +63,14 @@ class Gerry(object):
                 Gerry.wait_for_server(
                     exception.response.status_code)
             else:
-                log.error('GET %s %s failed with error: %s' % (change_type,
-                                                               exception))
+                log.error('GET %s failed with error: %s' % (change_type,
+                                                            exception))
         elif isinstance(exception, json.JSONDecodeError):
             log.error(
                 'Reading JSON for %s failed' % (change_type))
         elif isinstance(exception, Exception):
-            log.error('Unknown error occurred for %s %s: %s' % (change_type,
-                                                                exception))
+            log.error('Unknown error occurred for %s: %s' % (change_type,
+                                                             exception))
 
     def get_changes(self, day):
         from_datetime = day
