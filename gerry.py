@@ -49,12 +49,14 @@ class Gerry(object):
         self.end_date = end_date
         os.makedirs(self.directory, exist_ok=True)
 
+    @staticmethod
     def wait_for_server(status_code):
         # https://cloud.google.com/service-control/troubleshooting#how_do_i_perform_a_retry_on_api_errors
         GOOGLE_SERVER_WAITING_TIME = {429: 31, 500: 1, 503: 1}
         if status_code in GOOGLE_SERVER_WAITING_TIME:
             time.sleep(GOOGLE_SERVER_WAITING_TIME[status_code])
 
+    @staticmethod
     def handle_exception(exception, change_type):
         if isinstance(exception, requests.exceptions.RequestException):
             if exception.response is not None:
