@@ -47,7 +47,7 @@ Other pull requests are always welcome.
 
 ### Acknowledgements
 
-Many thanks to my great master student Jonathan Rieß, who added the tests. 
+Many thanks to my excellent master student [Jonathan Rieß](https://github.com/FreezerJohn), who added the full test setup. 
 
 
 ## License 
