@@ -7,22 +7,26 @@
 
 > Gerry is a small utility written in Python to crawl Gerrit review instances. 
 
+Gerry is the only tool of its kind (to my knowledge) which is not affected by the [Bug 9835](https://bugs.chromium.org/p/gerrit/issues/detail?id=9385). 
+
+
 ## Table of Contents
 
-- [Installation](#installation)
+- [Requirements](#requirements)
 - [Usage](#usage)
-- [Gerrit API](#api)
 - [Contributions](#contributions)
-- [Versions](#versions)
 - [License](#license)
 
 
-## Installation
+## Requirements
 
-Two packages are required: [`tdqm`](https://github.com/noamraph/tqdm) for a nice progress bar and [requests](https://github.com/requests/requests) for handling the HTTP requests. You can use pip for installing these required packages:
+Python 2.7 or later is required, Python 3 is recommended. 
 
-    pip install -r requirements.txt
+Gerry needs two packages: [`tdqm`](https://github.com/noamraph/tqdm) for a nice progress bar and [`requests`](https://github.com/requests/requests) for handling the HTTP requests. 
 
+You can use pip for installing these required packages:
+
+    pip install -r requirements.txt 
 
 ## Usage
 
@@ -30,10 +34,6 @@ Two packages are required: [`tdqm`](https://github.com/noamraph/tqdm) for a nice
     
 * `<gerrit_instances>`: Gerry supports the gerrit instances of OpenStack (`openstack`), Chromium (`chromium`), Gerrit (`gerrit`), Android ('android'), Go (`golang`), LibreOffice (`libreoffice`), Eclipse (`eclipse`), Wikimedia (`wikimedia`), and ONAP (`onap`). 
 * `<storage_directory>` (optional): The storage directory where to store the files (default `./gerry_data/`).
-
-
-## Discussion
-Gerry is the only Gerrit crawling tool (to my knowledge) which is not affected by the [Bug 9835](https://bugs.chromium.org/p/gerrit/issues/detail?id=9385). 
 
 
 ## Contributions
@@ -46,10 +46,6 @@ It would be great to get a pull request containing new instances or adding the o
 ### Acknowledgements
 
 Many thanks to my great master student Jonathan Rieß, who added the tests. 
-
-
-## Versions
-1.0
 
 
 ## License 
