@@ -7,8 +7,6 @@
 
 > Gerry is a small utility written in Python to crawl Gerrit review instances. 
 
-> **This project is currently under development. Tests and a neat README is to come. Please be patient with me. :)**
-
 ## Table of Contents
 
 - [Installation](#installation)
@@ -20,19 +18,39 @@
 
 
 ## Installation
-tbd
+
+Two packages are required: [`tdqm`](https://github.com/noamraph/tqdm) for a nice progress bar and [requests](https://github.com/requests/requests) for handling the HTTP requests. You can use pip for installing these required packages:
+
+    pip install -r requirements.txt
+
 
 ## Usage
-tbd
 
-## API
-tbd
+    python gerry.py <gerrit_instance> [--directory=<storage_directory>]
+    
+* `<gerrit_instances>`: Gerry supports the gerrit instances of OpenStack (`openstack`), Chromium (`chromium`), Gerrit (`gerrit`), Android ('android'), Go (`golang`), LibreOffice (`libreoffice`), Eclipse (`eclipse`), Wikimedia (`wikimedia`), and ONAP (`onap`). 
+* `<storage_directory>` (optional): The storage directory where to store the files (default `./gerry_data/`).
+
 
 ## Discussion
-tbd
+Gerry is the only Gerrit crawling tool (to my knowledge) which is not affected by the [Bug 9835](https://bugs.chromium.org/p/gerrit/issues/detail?id=9385). 
+
+
+## Contributions
+
+### To-do
+
+It would be great to get a pull request containing new instances or adding the option to add own (private, non-open-source) instances. 
+
+
+### Acknowledgements
+
+Many thanks to my great master student Jonathan Rieß, who added the tests. 
+
 
 ## Versions
-tbd
+1.0
+
 
 ## License 
 
