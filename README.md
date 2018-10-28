@@ -42,6 +42,8 @@ You can use pip for installing these required packages:
 
 It would be great to get a pull request containing new instances or adding the option to add own (private, non-open-source) instances. 
 
+Other pull requests are always welcome. 
+
 
 ### Acknowledgements
 
